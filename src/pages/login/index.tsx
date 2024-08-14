@@ -81,17 +81,17 @@ const FormControlLabel = styled(MuiFormControlLabel)<FormControlLabelProps>(({ t
 }))
 
 const schema = yup.object().shape({
-  email: yup.string().email().required(),
+  login: yup.string().required(),
   password: yup.string().min(5).required()
 })
 
 const defaultValues = {
-  password: 'admin',
-  email: 'admin@vuexy.com'
+  login: 'admin1',
+  password: '111111'
 }
 
 interface FormData {
-  email: string
+  login: string
   password: string
 }
 
@@ -121,11 +121,11 @@ const LoginPage = () => {
   })
 
   const onSubmit = (data: FormData) => {
-    const { email, password } = data
-    auth.login({ email, password, rememberMe }, () => {
-      setError('email', {
+    const { login, password } = data
+    auth.login({ login, password, rememberMe }, () => {
+      setError('login', {
         type: 'manual',
-        message: 'Email or Password is invalid'
+        message: 'login or password is invalid'
       })
     })
   }
@@ -209,20 +209,20 @@ const LoginPage = () => {
             <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
               <Box sx={{ mb: 4 }}>
                 <Controller
-                  name='email'
+                  name='login'
                   control={control}
                   rules={{ required: true }}
                   render={({ field: { value, onChange, onBlur } }) => (
                     <CustomTextField
                       fullWidth
                       autoFocus
-                      label='Email'
+                      label='Login'
                       value={value}
                       onBlur={onBlur}
                       onChange={onChange}
                       placeholder='admin@vuexy.com'
-                      error={Boolean(errors.email)}
-                      {...(errors.email && { helperText: errors.email.message })}
+                      error={Boolean(errors.login)}
+                      {...(errors.login && { helperText: errors.login.message })}
                     />
                   )}
                 />
@@ -269,10 +269,10 @@ const LoginPage = () => {
                   justifyContent: 'space-between'
                 }}
               >
-                <FormControlLabel
+                {/* <FormControlLabel
                   label='Remember Me'
                   control={<Checkbox checked={rememberMe} onChange={e => setRememberMe(e.target.checked)} />}
-                />
+                /> */}
                 <Typography component={LinkStyled} href='/forgot-password'>
                   Forgot Password?
                 </Typography>
