@@ -30,8 +30,8 @@ const defineRulesFor = (role: string, subject: string) => {
   return rules
 }
 
-export const buildAbilityFor = (role: string, subject: string): AppAbility => {
-  return new AppAbility(defineRulesFor(role, subject), {
+export const buildAbilityFor = (role: string | undefined, subject: string): AppAbility => {
+  return new AppAbility(defineRulesFor(role!, subject), {
     // https://casl.js.org/v5/en/guide/subject-type-detection
     // @ts-ignore
     detectSubjectType: object => object!.type
