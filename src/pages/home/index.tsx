@@ -23,7 +23,7 @@ const STATUSES = [0, 1, 2, 3]
 const CURRENCIES = ['USD', 'EUR', 'RUB']
 
 const initialFilters: InitialFilters = {
-  main_group: filterFormatter(GROUPS),
+  group: filterFormatter(GROUPS),
   status: filterFormatter(STATUSES),
   currency: filterFormatter(CURRENCIES)
 }

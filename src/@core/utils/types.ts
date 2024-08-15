@@ -30,7 +30,7 @@ export type Filters = {
 }
 
 export type InitialFilters = {
-  main_group: FilterValue[]
+  group: FilterValue[]
   status: FilterValue[]
   currency: FilterValue[]
 }
