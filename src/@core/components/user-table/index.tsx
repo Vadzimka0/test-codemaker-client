@@ -3,7 +3,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 
 import { UserData } from 'src/@core/utils/types'
 
-const columns = ['id', 'login', 'main_group', 'status', 'currency', 'balance', 'bonus_balance', 'register_at']
+const columns = ['id', 'login', 'group', 'status', 'currency', 'balance', 'bonus_balance', 'date_reg']
 
 type UserTableProps = {
   users: UserData[]
@@ -38,12 +38,12 @@ const UserTable = ({ users, handleSorting, sorting }: UserTableProps) => {
               <TableCell>
                 <Link href={`/user/${user.id}`}>{user.login}</Link>
               </TableCell>
-              <TableCell>{user.main_group}</TableCell>
+              <TableCell>{user.group}</TableCell>
               <TableCell>{user.status}</TableCell>
               <TableCell>{user.currency}</TableCell>
               <TableCell>{user.balance}</TableCell>
               <TableCell>{user.bonus_balance}</TableCell>
-              <TableCell>{user.register_at.slice(0, 10)}</TableCell>
+              <TableCell>{user.date_reg.slice(0, 10)}</TableCell>
             </TableRow>
           ))}
         </TableBody>

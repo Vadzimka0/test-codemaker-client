@@ -42,10 +42,10 @@ export interface Parameters {
 export type UserData = {
   id: number
   login: string
-  main_group: 1 | 2 | 3 | 4
-  status: 'idle' | 'active' | 'inactive' | 'confirmed'
-  currency: 'USD' | 'EUR' | 'CAD' | 'GBP' | 'JPY'
+  group: 0 | 1 | 2 | 3
+  status: 0 | 1 | 2 | 3
+  currency: 'USD' | 'EUR' | 'RUB'
   balance: string
   bonus_balance: string
-  register_at: string
+  date_reg: string
 }

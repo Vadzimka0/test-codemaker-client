@@ -15,10 +15,12 @@ import { toStringFilterFormatter } from 'src/@core/utils/to-string-filter-format
 import { InitialFilters, Parameters, UserData } from 'src/@core/utils/types'
 import UserTable from 'src/@core/components/user-table'
 import FilterAside from 'src/@core/components/filter-aside'
+import Backdrop from '@mui/material/Backdrop'
+import CircularProgress from '@mui/material/CircularProgress'
 
-const GROUPS = [1, 2, 3]
-const STATUSES = ['idle', 'active', 'inactive', 'confirmed']
-const CURRENCIES = ['USD', 'EUR', 'CAD', 'GBP', 'JPY']
+const GROUPS = [0, 1, 2, 3]
+const STATUSES = [0, 1, 2, 3]
+const CURRENCIES = ['USD', 'EUR', 'RUB']
 
 const initialFilters: InitialFilters = {
   main_group: filterFormatter(GROUPS),
@@ -101,27 +103,37 @@ const Home = () => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={3}>
-        <FilterAside filters={filters} handleFilterChange={handleFilterChange} />
+        <FilterAside filters={filters} handleFilterChange={handleFilterChange} disabled={loading} />
       </Grid>
       <Grid item xs={9}>
-        <UserTable users={users} handleSorting={handleSortingChange} sorting={sorting} />
-        <Grid container direction='row' justifyContent='flex-end' marginTop={5}>
-          <Pagination count={meta.totalPages} page={paginator.page} onChange={handlePaginatorChange} />
-          <FormControl sx={{ m: 1, minWidth: 120 }} size='small'>
-            <InputLabel id='demo-select-small-label'>Per page</InputLabel>
-            <Select
-              labelId='demo-select-small-label'
-              id='demo-select-small'
-              value={paginator.limit.toString()}
-              label='Per page'
-              onChange={handleSelectChange}
-            >
-              <MenuItem value={5}>5</MenuItem>
-              <MenuItem value={10}>10</MenuItem>
-              <MenuItem value={20}>20</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
+        {loading ? (
+          <Backdrop open={loading} style={{ zIndex: 1 }}>
+            <CircularProgress color='inherit' />
+          </Backdrop>
+        ) : (
+          <>
+            <UserTable users={users} handleSorting={handleSortingChange} sorting={sorting} />
+            <Grid container direction='row' justifyContent='flex-end' marginTop={5} columnGap={5}>
+              <Pagination count={meta.totalPages} page={paginator.page} onChange={handlePaginatorChange} size='small' />
+              <FormControl sx={{ m: 1, minWidth: 120 }} size='small'>
+                <InputLabel id='demo-select-small-label'>Per page</InputLabel>
+                <Select
+                  size='small'
+                  labelId='demo-select-small-label'
+                  id='demo-select-small'
+                  value={paginator.limit.toString()}
+                  label='Per page'
+                  onChange={handleSelectChange}
+                >
+                  <MenuItem value={10}>10</MenuItem>
+                  <MenuItem value={20}>20</MenuItem>
+                  <MenuItem value={50}>50</MenuItem>
+                  <MenuItem value={100}>100</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+          </>
+        )}
       </Grid>
     </Grid>
   )

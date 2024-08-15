@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState, ReactNode, MouseEvent } from 'react'
+import { useState, ReactNode, MouseEvent, useEffect } from 'react'
 
 // ** Next Imports
 import Link from 'next/link'
@@ -8,14 +8,16 @@ import Link from 'next/link'
 import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
-import Checkbox from '@mui/material/Checkbox'
+
+// import Checkbox from '@mui/material/Checkbox'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import Box, { BoxProps } from '@mui/material/Box'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { styled, useTheme } from '@mui/material/styles'
 import InputAdornment from '@mui/material/InputAdornment'
-import MuiFormControlLabel, { FormControlLabelProps } from '@mui/material/FormControlLabel'
+
+// import MuiFormControlLabel, { FormControlLabelProps } from '@mui/material/FormControlLabel'
 
 // ** Custom Component Import
 import CustomTextField from 'src/@core/components/mui/text-field'
@@ -74,11 +76,11 @@ const LinkStyled = styled(Link)(({ theme }) => ({
   color: `${theme.palette.primary.main} !important`
 }))
 
-const FormControlLabel = styled(MuiFormControlLabel)<FormControlLabelProps>(({ theme }) => ({
-  '& .MuiFormControlLabel-label': {
-    color: theme.palette.text.secondary
-  }
-}))
+// const FormControlLabel = styled(MuiFormControlLabel)<FormControlLabelProps>(({ theme }) => ({
+//   '& .MuiFormControlLabel-label': {
+//     color: theme.palette.text.secondary
+//   }
+// }))
 
 const schema = yup.object().shape({
   login: yup.string().required(),
@@ -96,10 +98,20 @@ interface FormData {
 }
 
 const LoginPage = () => {
-  const [rememberMe, setRememberMe] = useState<boolean>(true)
+  // const [rememberMe, setRememberMe] = useState<boolean>(true)
   const [showPassword, setShowPassword] = useState<boolean>(false)
+  const [userAgent, setUserAgent] = useState('')
+  const [ip, setIp] = useState('')
 
   // ** Hooks
+  useEffect(() => {
+    setUserAgent(window.navigator.userAgent)
+
+    fetch('https://api.ipify.org/?format=json')
+      .then(response => response.json())
+      .then(data => setIp(data.ip))
+  }, [])
+
   const auth = useAuth()
   const theme = useTheme()
   const bgColors = useBgColor()
@@ -122,7 +134,7 @@ const LoginPage = () => {
 
   const onSubmit = (data: FormData) => {
     const { login, password } = data
-    auth.login({ login, password, rememberMe }, () => {
+    auth.login({ login, pass: password, userAgent, ip, method: 'AUTH' }, () => {
       setError('login', {
         type: 'manual',
         message: 'login or password is invalid'

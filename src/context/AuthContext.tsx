@@ -84,13 +84,12 @@ const AuthProvider = ({ children }: Props) => {
         // params.rememberMe
         //   ? window.localStorage.setItem(authConfig.storageTokenKeyName, response.data.accessToken)
         //   : null
-        const returnUrl = router.query.returnUrl
+        // const returnUrl = router.query.returnUrl
 
         setUser({ ...response.data.user, role: 'admin' })
 
         // params.rememberMe ? window.localStorage.setItem('userData', JSON.stringify(response.data.userData)) : null
-
-        const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
+        // const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
 
         router.replace('/home')
       })
